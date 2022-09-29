@@ -2,6 +2,7 @@
 *.pyc
 *.DS_Store
 ._*
+.vscode
 
 */CMakeLists.txt
 
