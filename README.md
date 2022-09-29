@@ -1,8 +1,8 @@
-# Paddle PHI C++ 组合运算示例
+# Paddle PHI C++ API 组合运算示例
 
 ## 1. 背景
 
-Paddle 自 2.3 版本起，通过 PHI 算子库开放了部分 C++ API，支持通过 C++ API 复用 PHI 算子库内实现的算子，当前官方主要推荐在[自定义算子](https://www.paddlepaddle.org.cn/documentation/docs/zh/develop/guides/custom_op/new_cpp_op_cn.html)开发时使用，降低在框架外部组合复杂算子的开发成本。
+Paddle 自 2.3 版本起，通过 PHI 算子库开放了部分 C++ API，支持通过 C++ API 复用 PHI 算子库内实现的算子，当前官方主要推荐在 [自定义算子](https://www.paddlepaddle.org.cn/documentation/docs/zh/develop/guides/custom_op/new_cpp_op_cn.html) 开发时使用，降低在框架外部组合复杂算子的开发成本。
 
 在 2.4 版本，Paddle 开放的 C++ 算子API 个数达 350+ ，基本将框架内仍在使用的运算类算子均通过 C++ API 开放给外部用户调用，具体的 API 列表可以在 Paddle 安装目录下的相应头文件中的查看，如 `${your python path}/lib/python3.7/site-packages/paddle/include/paddle/phi/api/include/api.h`。示例如下：
 
@@ -32,6 +32,8 @@ PADDLE_API Tensor erf(const Tensor& x);
 PADDLE_API Tensor erfinv(const Tensor& x);
 
 PADDLE_API Tensor& erfinv_(Tensor& x);
+
+...
 ```
 
 > 注：由于一些历史原因，Paddle内诸多算子的参数与 Python API 参数并不一致，导致将其开放为 C++ API 也会存在与 Python API 参数不一致的情况，这是一种不规范的现象，因此这些 API 暂时放在 paddle::experimental 命名空间下，部分一致的 API 手动放在 paddle 命名空间下。
