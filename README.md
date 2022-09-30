@@ -43,6 +43,7 @@ PADDLE_API Tensor& erfinv_(Tensor& x);
 ```
 
 > 注1：由于一些历史原因，Paddle内诸多算子的参数与 Python API 参数并不一致，导致将其开放为 C++ API 也会存在与 Python API 参数不一致的情况，这是一种不规范的现象，因此这些 API 暂时放在 paddle::experimental 命名空间下，部分一致的 API 手动放在 paddle 命名空间下。
+
 > 注2：Paddle 目前仅推进对外使用 phi/api 目录下以 Tensor 为中心的 API，在 phi/core 中的以 DenseTensor，SparseXXXTensor为中心的是底层使用的 API ，复杂度比较高，暂时不推荐外部用户使用
 
 除自定义算子场景外，开发者也可以使用此类 C++ API 在外部实现一段 C++ 计算程序，但由于 Paddle 开放的算子只有计算功能，并不支持 autograd，因此并不能通过这样的方式进行 C++ 训练。
