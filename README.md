@@ -4,7 +4,13 @@
 
 Paddle 自 2.3 版本起，通过 PHI 算子库开放了部分 C++ API，支持通过 C++ API 复用 PHI 算子库内实现的算子，当前官方主要推荐在 [自定义算子](https://www.paddlepaddle.org.cn/documentation/docs/zh/develop/guides/custom_op/new_cpp_op_cn.html) 开发时使用，降低在框架外部组合复杂算子的开发成本。
 
-在 2.4 版本，Paddle 开放的 C++ 算子API 个数达 350+ ，基本将框架内仍在使用的运算类算子均通过 C++ API 开放给外部用户调用，具体的 API 列表可以在 Paddle 安装目录下的相应头文件中的查看，如 `${your python path}/lib/python3.7/site-packages/paddle/include/paddle/phi/api/include/api.h`。示例如下：
+在 2.4 版本，Paddle 开放的 C++ 算子API 个数达 350+ ，基本将框架内仍在使用的运算类算子均通过 C++ API 开放给外部用户调用，需要时只需要 include 一个汇总的扩展头文件即可。
+
+```
+#include <paddle/extension.h>
+```
+
+具体的 API 列表可以在 Paddle 安装目录下的相应头文件中的查看，如 `${your python path}/lib/python3.7/site-packages/paddle/include/paddle/phi/api/include/api.h`。示例如下：
 
 ```c++
 PADDLE_API Tensor atan2(const Tensor& x, const Tensor& y);
@@ -36,7 +42,8 @@ PADDLE_API Tensor& erfinv_(Tensor& x);
 ...
 ```
 
-> 注：由于一些历史原因，Paddle内诸多算子的参数与 Python API 参数并不一致，导致将其开放为 C++ API 也会存在与 Python API 参数不一致的情况，这是一种不规范的现象，因此这些 API 暂时放在 paddle::experimental 命名空间下，部分一致的 API 手动放在 paddle 命名空间下。
+> 注1：由于一些历史原因，Paddle内诸多算子的参数与 Python API 参数并不一致，导致将其开放为 C++ API 也会存在与 Python API 参数不一致的情况，这是一种不规范的现象，因此这些 API 暂时放在 paddle::experimental 命名空间下，部分一致的 API 手动放在 paddle 命名空间下。
+> 注2：Paddle 目前仅推进对外使用 phi/api 目录下以 Tensor 为中心的 API，在 phi/core 中的以 DenseTensor，SparseXXXTensor为中心的是底层使用的 API ，复杂度比较高，暂时不推荐外部用户使用
 
 除自定义算子场景外，开发者也可以使用此类 C++ API 在外部实现一段 C++ 计算程序，但由于 Paddle 开放的算子只有计算功能，并不支持 autograd，因此并不能通过这样的方式进行 C++ 训练。
 
