@@ -71,6 +71,14 @@ $ cd build
 
 执行cmake
 
+This works for me
+
+```shell
+cmake .. -DPADDLE_LIBRARY=$(python -c "import paddle, os, inspect; print(os.path.dirname(inspect.getsourcefile(paddle)))") -DCMAKE_PREFIX_PATH=$(python -c "import pybind11, os, inspect; print(os.path.dirname(inspect.getsourcefile(pybind11)))")/..
+```
+
+This is being used by Weihang
+
 ```shell
 $ cmake .. -DPYTHON_LIBRARY=$(python -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")
 
